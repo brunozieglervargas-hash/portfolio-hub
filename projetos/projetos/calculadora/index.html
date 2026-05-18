@@ -1,10 +1,287 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Calculadora</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Hub | Projeto Acadêmico</title>
+  <style>
+    /* Reset e Variáveis de Cores */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg-dark: #0f172a;
+      --bg-light: #f8fafc;
+      --text-main: #334155;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* Cabeçalho / Navbar */
+    header {
+      background-color: var(--bg-dark);
+      color: white;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .logo span { color: var(--primary); }
+    .nav-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: white; }
+
+    /* Seção Hero (Apresentação) */
+    .hero {
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+    }
+    .btn-github {
+      background-color: var(--primary);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s;
+      display: inline-block;
+    }
+    .btn-github:hover { background-color: var(--primary-dark); }
+
+    /* Seção Principal (Calculadora Interativa) */
+    .main-section {
+      max-width: 1200px;
+      margin: -4rem auto 4rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .main-section { grid-template-columns: 1fr; margin-top: 2rem; }
+    }
+
+    /* O App da Calculadora */
+    .calc-container {
+      background-color: #1e293b;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+      max-width: 350px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    #display {
+      width: 100%;
+      height: 60px;
+      background-color: #0f172a;
+      border: none;
+      border-radius: 10px;
+      color: #38bdf8;
+      font-size: 2rem;
+      text-align: right;
+      padding: 0 1rem;
+      margin-bottom: 1rem;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+    .btn {
+      padding: 1.2rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #334155;
+      color: white;
+      transition: background 0.2s;
+    }
+    .btn:hover { background-color: #475569; }
+    .btn.operator { background-color: #f97316; }
+    .btn.operator:hover { background-color: #ea580c; }
+    .btn.clear { background-color: #ef4444; }
+    .btn.clear:hover { background-color: #dc2626; }
+    .btn.equal { background-color: #10b981; grid-column: span 2; }
+    .btn.equal:hover { background-color: #059669; }
+
+    /* Detalhes do Projeto */
+    .project-info h2 {
+      font-size: 2rem;
+      color: var(--bg-dark);
+      margin-bottom: 1rem;
+    }
+    .project-info p { margin-bottom: 1rem; }
+    .features-list {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+    .features-list li {
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    .features-list li::before {
+      content: "✓";
+      color: var(--primary);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    /* Rodapé */
+    footer {
+      background-color: var(--bg-dark);
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Minha Calculadora</h1>
-  <p>Projeto da faculdade usando GitHub.</p>
+
+  <!-- Navbar -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">Academia<span>Calc</span></div>
+      <nav class="nav-links">
+        <a href="#inicio">Início</a>
+        <a href="#projeto">O Projeto</a>
+        <a href="#calculadora">Calculadora</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <h1>Minha Calculadora Web</h1>
+      <p>Um projeto acadêmico focado em desenvolvimento front-end, versionado via Git e hospedado publicamente no GitHub.</p>
+      <a href="https://github.com" target="_blank" class="btn-github">Ver Repositório no GitHub</a>
+    </div>
+  </section>
+
+  <!-- Main Section (Info + Calculadora) -->
+  <main class="main-section" id="projeto">
+    
+    <!-- Texto Descritivo -->
+    <div class="project-info">
+      <h2>Sobre o Projeto</h2>
+      <p>Este sistema foi desenvolvido como critério avaliativo para a faculdade, aplicando conceitos práticos de HTML5 semântico, estilização avançada com CSS3 e manipulação de eventos em JavaScript puro (Vanilla JS).</p>
+      <p>O foco principal foi criar uma interface limpa, intuitiva e totalmente adaptável para dispositivos móveis.</p>
+      
+      <ul class="features-list">
+        <li>Interface Responsiva (Mobile Friendly)</li>
+        <li>Código semântico e limpo</li>
+        <li>Histórico de operações em tempo real</li>
+        <li>Controle de versão estruturado com Git</li>
+      </ul>
+    </div>
+
+    <!-- Interface da Calculadora -->
+    <div class="calc-container" id="calculadora">
+      <input type="text" id="display" readonly placeholder="0">
+      <div class="buttons">
+        <button class="btn clear" onclick="clearDisplay()">C</button>
+        <button class="btn" onclick="appendValue('/')">/</button>
+        <button class="btn" onclick="appendValue('*')">*</button>
+        <button class="btn operator" onclick="appendValue('-')">-</button>
+        
+        <button class="btn" onclick="appendValue('7')">7</button>
+        <button class="btn" onclick="appendValue('8')">8</button>
+        <button class="btn" onclick="appendValue('9')">9</button>
+        <button class="btn operator" onclick="appendValue('+')">+</button>
+        
+        <button class="btn" onclick="appendValue('4')">4</button>
+        <button class="btn" onclick="appendValue('5')">5</button>
+        <button class="btn" onclick="appendValue('6')">6</button>
+        <button class="btn" onclick="appendValue('.')">.</button>
+        
+        <button class="btn" onclick="appendValue('1')">1</button>
+        <button class="btn" onclick="appendValue('2')">2</button>
+        <button class="btn" onclick="appendValue('3')">3</button>
+        
+        <button class="btn" onclick="appendValue('0')">0</button>
+        <button class="btn equal" onclick="calculate()">=</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>&copy; 2026 Projeto de Faculdade. Desenvolvido para fins educacionais.</p>
+  </footer>
+
+  <!-- Lógica da Calculadora -->
+  <script>
+    const display = document.getElementById('display');
+
+    function appendValue(value) {
+      if (display.value === 'Erro') display.value = '';
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function calculate() {
+      try {
+        // O uso de eval aqui é estritamente controlado pelo clique dos botões fixos
+        if (display.value) {
+          display.value = eval(display.value);
+        }
+      } catch (error) {
+        display.value = 'Erro';
+      }
+    }
+  </script>
+
 </body>
 </html>
